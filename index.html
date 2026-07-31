@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="bn" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>বটতলা হেল্পলাইন | Bottola Helpline</title>
+    <meta name="description" content="বটতলা এলাকার সকল জরুরী সেবা ও স্থানীয় ডিরেক্টরি অ্যাপ">
+    <meta name="theme-color" content="#0d9488">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        primary: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Kalpurush', 'Hind Siliguri', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-header { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+        .tab-active { color: #0d9488; font-weight: 700; }
+        .tab-active::after { content: ''; display: block; width: 24px; height: 3px; background: #0d9488; margin: 2px auto 0; border-radius: 99px; }
+    </style>
+</head>
+<body class="h-full text-slate-800 antialiased select-none pb-20">
+
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-primary-700 to-brand-800 text-white transition-opacity duration-500">
+        <div class="relative flex items-center justify-center mb-4">
+            <div class="absolute w-28 h-28 bg-white/20 rounded-full animate-ping"></div>
+            <!-- Splash Branding Image -->
+            <div class="w-24 h-24 bg-white rounded-3xl flex items-center justify-center shadow-2xl z-10 overflow-hidden border-2 border-white/80 p-1">
+                <img src="https://i.supaimg.com/f30568ee-3373-4ee0-91bb-6e61dcd3e7c1/a72afe61-83aa-49f8-a3e3-ed3b5790478d.jpg" alt="Logo" class="w-full h-full object-cover rounded-2xl">
+            </div>
+        </div>
+        <h1 class="text-3xl font-bold tracking-wide">বটতলা হেল্পলাইন</h1>
+        <p class="text-sm font-light text-teal-100 mt-1">আপনার ডিজিটাল সেবা ডিরেক্টরি</p>
+        <div class="mt-8 flex items-center space-x-2">
+            <div class="w-3 h-3 bg-white rounded-full animate-bounce"></div>
+            <div class="w-3 h-3 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+            <div class="w-3 h-3 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+        </div>
+    </div>
+
+    <!-- Main App Wrapper -->
+    <div id="app" class="min-h-screen flex flex-col max-w-md mx-auto bg-slate-50 border-x border-slate-200 relative shadow-2xl overflow-hidden">
+        
+        <!-- Top App Bar -->
+        <header class="sticky top-0 z-30 glass-header border-b border-slate-200/80 px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <button id="btn-open-drawer" class="p-2 text-slate-700 hover:bg-slate-100 rounded-full transition" aria-label="Menu">
+                    <i class="fa-solid fa-bars-staggered text-xl"></i>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <!-- Header Branding Thumbnail -->
+                    <img src="https://i.supaimg.com/f30568ee-3373-4ee0-91bb-6e61dcd3e7c1/a72afe61-83aa-49f8-a3e3-ed3b5790478d.jpg" alt="Logo" class="w-9 h-9 rounded-xl object-cover border border-teal-500 shadow-sm shrink-0">
+                    <div>
+                        <h1 class="text-base font-bold text-slate-900 leading-tight">বটতলা হেল্পলাইন</h1>
+                        <p class="text-[11px] text-slate-500 font-medium" id="header-user-status">গেস্ট মোড</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button id="btn-search-trigger" class="p-2 text-slate-700 hover:bg-slate-100 rounded-full transition" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+                <button id="btn-header-auth" class="p-2 text-primary-600 hover:bg-teal-50 rounded-full transition" aria-label="Account">
+                    <i class="fa-solid fa-circle-user text-2xl"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Bar Overlay -->
+        <div id="search-modal" class="hidden fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm p-4">
+            <div class="bg-white rounded-2xl p-4 shadow-2xl max-w-md mx-auto">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-bold text-slate-800">সার্চ করুন</h3>
+                    <button id="btn-close-search" class="text-slate-400 hover:text-slate-600">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+                <div class="relative">
+                    <input type="text" id="global-search-input" placeholder="হাসপাতাল, ব্লাড, পুলিশ বা সেবা খুঁজুন..." class="w-full bg-slate-100 pl-10 pr-4 py-3 rounded-xl border-none text-slate-800 focus:ring-2 focus:ring-primary-500 text-sm">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+                </div>
+                <div id="search-results" class="mt-4 max-h-80 overflow-y-auto space-y-2 hide-scrollbar">
+                    <p class="text-xs text-slate-400 text-center py-6">কিছু লিখে সার্চ করুন...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Drawer Side Navigation -->
+        <div id="drawer-backdrop" class="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
+        <aside id="drawer" class="fixed top-0 left-0 bottom-0 z-50 w-72 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+            <div class="p-5 bg-gradient-to-r from-primary-700 to-brand-700 text-white">
+                <div class="flex items-center space-x-3 mb-3">
+                    <div id="drawer-user-avatar" class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center border border-white/30 text-white font-bold text-xl overflow-hidden">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <h2 id="drawer-user-name" class="font-bold text-base leading-tight">অতিথি</h2>
+                        <p id="drawer-user-email" class="text-xs text-teal-100">লগইন করা নেই</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex-1 overflow-y-auto p-4 space-y-1">
+                <button data-nav="home" class="drawer-link flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-slate-700 font-medium hover:bg-slate-100 active:bg-primary-50 active:text-primary-600 transition">
+                    <i class="fa-solid fa-house text-lg text-slate-500"></i>
+                    <span>হোম (Home)</span>
+                </button>
+                <button data-nav="about" class="drawer-link flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-slate-700 font-medium hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-circle-info text-lg text-slate-500"></i>
+                    <span>আমাদের সম্পর্কে (About)</span>
+                </button>
+                <button data-nav="privacy" class="drawer-link flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-slate-700 font-medium hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-shield-halved text-lg text-slate-500"></i>
+                    <span>গোপনীয়তা নীতি (Privacy Policy)</span>
+                </button>
+                <button data-nav="terms" class="drawer-link flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-slate-700 font-medium hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-file-contract text-lg text-slate-500"></i>
+                    <span>শর্তাবলী (Terms)</span>
+                </button>
+                <button data-nav="developer" class="drawer-link flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-slate-700 font-medium hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-code text-lg text-slate-500"></i>
+                    <span>ডেভেলপার (Developer)</span>
+                </button>
+            </nav>
+
+            <div class="p-4 border-t border-slate-100">
+                <button id="btn-drawer-logout" class="flex items-center justify-center space-x-2 w-full py-2.5 rounded-xl text-red-600 font-semibold bg-red-50 hover:bg-red-100 transition">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span id="txt-drawer-auth-btn">লগইন করুন</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Dynamic Main Content Area -->
+        <main id="main-content" class="flex-1 overflow-y-auto px-4 py-3 space-y-5">
+            
+            <!-- HOME VIEW -->
+            <section id="view-home" class="space-y-5">
+                
+                <!-- Main Top Branding Image Card -->
+                <div class="w-full rounded-2xl overflow-hidden shadow-md border border-slate-200 bg-white">
+                    <img src="https://i.supaimg.com/f30568ee-3373-4ee0-91bb-6e61dcd3e7c1/a72afe61-83aa-49f8-a3e3-ed3b5790478d.jpg" alt="বটতলা হেল্পলাইন ব্রান্ডিং" class="w-full h-auto max-h-52 object-cover">
+                </div>
+
+                <!-- Notice Ticker -->
+                <div id="notice-container" class="hidden bg-amber-50 border border-amber-200/80 rounded-xl p-3 flex items-center space-x-3">
+                    <span class="bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-md shrink-0">নোটিশ</span>
+                    <marquee id="notice-text" class="text-xs text-amber-900 font-medium"></marquee>
+                </div>
+
+                <!-- Banner Slider View -->
+                <div id="banner-slider-container" class="relative rounded-2xl overflow-hidden bg-slate-200 h-40 shadow-sm">
+                    <div id="banner-slider" class="w-full h-full flex transition-transform duration-500 ease-out">
+                        <div class="w-full h-full shrink-0 bg-gradient-to-r from-primary-600 to-brand-600 text-white p-5 flex flex-col justify-between">
+                            <span class="text-xs bg-white/20 font-semibold px-2.5 py-1 rounded-full w-fit backdrop-blur-md">জরুরী হেল্পলাইন</span>
+                            <div>
+                                <h2 class="text-xl font-bold">বটতলা এলাকার সকল সেবা এক ছাদের নিচে</h2>
+                                <p class="text-xs opacity-90 mt-1">প্রয়োজনে দ্রুত যোগাযোগ করুন যে কোনো জরুরী সেবায়</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="slider-dots" class="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1.5"></div>
+                </div>
+
+                <!-- Quick Emergency Access Buttons -->
+                <div>
+                    <h3 class="text-sm font-bold text-slate-900 mb-2.5 flex items-center justify-between">
+                        <span>জরুরী সেবা হটলাইন</span>
+                        <span class="text-xs font-normal text-rose-600">২৪/৭ সার্ভিস</span>
+                    </h3>
+                    <div class="grid grid-cols-4 gap-2">
+                        <a href="tel:999" class="flex flex-col items-center justify-center p-2.5 bg-rose-50 border border-rose-100 rounded-xl hover:bg-rose-100 transition text-center">
+                            <i class="fa-solid fa-shield-halved text-rose-600 text-xl mb-1"></i>
+                            <span class="text-xs font-bold text-rose-900">৯৯৯</span>
+                            <span class="text-[10px] text-rose-600 font-medium">জাতীয় সেবা</span>
+                        </a>
+                        <a href="tel:333" class="flex flex-col items-center justify-center p-2.5 bg-amber-50 border border-amber-100 rounded-xl hover:bg-amber-100 transition text-center">
+                            <i class="fa-solid fa-circle-info text-amber-600 text-xl mb-1"></i>
+                            <span class="text-xs font-bold text-amber-900">৩৩৩</span>
+                            <span class="text-[10px] text-amber-600 font-medium">তথ্য সেবা</span>
+                        </a>
+                        <a href="tel:109" class="flex flex-col items-center justify-center p-2.5 bg-indigo-50 border border-indigo-100 rounded-xl hover:bg-indigo-100 transition text-center">
+                            <i class="fa-solid fa-hands-holding-child text-indigo-600 text-xl mb-1"></i>
+                            <span class="text-xs font-bold text-indigo-900">১০৯</span>
+                            <span class="text-[10px] text-indigo-600 font-medium">নারী ও শিশু</span>
+                        </a>
+                        <a href="tel:106" class="flex flex-col items-center justify-center p-2.5 bg-emerald-50 border border-emerald-100 rounded-xl hover:bg-emerald-100 transition text-center">
+                            <i class="fa-solid fa-building-columns text-emerald-600 text-xl mb-1"></i>
+                            <span class="text-xs font-bold text-emerald-900">১০৬</span>
+                            <span class="text-[10px] text-emerald-600 font-medium">দুদক</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Dynamic Categories Grid -->
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-base font-bold text-slate-900">ক্যাটাগরি সমূহ</h3>
+                        <span class="text-xs text-slate-400" id="category-count">লোড হচ্ছে...</span>
+                    </div>
+                    <div id="category-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                        <div class="bg-slate-200 h-24 rounded-2xl animate-pulse"></div>
+                        <div class="bg-slate-200 h-24 rounded-2xl animate-pulse"></div>
+                        <div class="bg-slate-200 h-24 rounded-2xl animate-pulse"></div>
+                    </div>
+                </div>
+
+                <!-- Recent Listings -->
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-base font-bold text-slate-900">সাম্প্রতিক যুক্ত তথ্য</h3>
+                    </div>
+                    <div id="recent-listings-list" class="space-y-3">
+                        <p class="text-xs text-slate-400 text-center py-4">তথ্য লোড হচ্ছে...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CATEGORY ITEMS LIST VIEW -->
+            <section id="view-category-list" class="hidden space-y-4">
+                <div class="flex items-center justify-between bg-white p-3 rounded-xl shadow-sm border border-slate-200">
+                    <button id="btn-back-category" class="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                        <i class="fa-solid fa-arrow-left text-lg"></i>
+                    </button>
+                    <h2 id="category-title" class="font-bold text-base text-slate-800">ক্যাটাগরি</h2>
+                    <div class="w-8"></div>
+                </div>
+                <div id="category-items-container" class="space-y-3">
+                    <div class="text-center py-8 text-slate-400">তথ্য লোড হচ্ছে...</div>
+                </div>
+            </section>
+
+            <!-- DETAIL VIEW -->
+            <section id="view-detail" class="hidden space-y-4">
+                <div class="flex items-center justify-between">
+                    <button id="btn-back-detail" class="p-2 text-slate-600 hover:bg-slate-100 rounded-lg bg-white shadow-sm border border-slate-200">
+                        <i class="fa-solid fa-arrow-left text-lg"></i>
+                    </button>
+                    <span class="font-bold text-sm text-slate-600">বিস্তারিত তথ্য</span>
+                    <button id="btn-bookmark-item" class="p-2 text-slate-600 hover:bg-slate-100 rounded-lg bg-white shadow-sm border border-slate-200">
+                        <i class="fa-regular fa-bookmark text-lg" id="bookmark-icon"></i>
+                    </button>
+                </div>
+                <div id="detail-card" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                </div>
+            </section>
+
+            <!-- POST EDIT / CREATE FORM VIEW -->
+            <section id="view-create-post" class="hidden space-y-4">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 id="form-title" class="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">নতুন তথ্য যোগ করুন</h2>
+                    <form id="post-form" class="space-y-4">
+                        <input type="hidden" id="post-id">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">ক্যাটাগরি নির্বাচন করুন *</label>
+                            <select id="post-category" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-primary-500">
+                                <option value="">নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">নাম / শিরোনাম *</label>
+                            <input type="text" id="post-title" required placeholder="যেমন: সেন্ট্রাল হাসপাতাল" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">মোবাইল নম্বর *</label>
+                            <input type="tel" id="post-phone" required placeholder="01700000000" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">ঠিকানা / স্থান *</label>
+                            <input type="text" id="post-address" required placeholder="যেমন: বটতলা বাজার মোড়" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">বিস্তারিত বিবরণ</label>
+                            <textarea id="post-details" rows="4" placeholder="প্রয়োজনীয় তথ্য বা বিবরণ লিখুন..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-primary-500"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">ছবি বা লোগো (ঐচ্ছিক URL)</label>
+                            <input type="url" id="post-image" placeholder="https://example.com/image.jpg" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <button type="submit" id="btn-submit-post" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-teal-600/30 transition">
+                            পাবলিশ করুন
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- MY POSTS VIEW -->
+            <section id="view-my-posts" class="hidden space-y-4">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-base font-bold text-slate-900 mb-3">আমার পোস্ট সমূহ</h2>
+                    <div id="my-posts-list" class="space-y-3">
+                        <p class="text-xs text-slate-400 text-center py-6">আপনি এখনও কোনো পোস্ট করেননি।</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SAVED ITEMS VIEW -->
+            <section id="view-saved" class="hidden space-y-4">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-base font-bold text-slate-900 mb-3">সংরক্ষিত সেবা</h2>
+                    <div id="saved-items-list" class="space-y-3">
+                        <p class="text-xs text-slate-400 text-center py-6">কোনো বুকমার্ক করা সেবা নেই।</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROFILE VIEW (GOOGLE + EMAIL AUTH FOR WEBVIEW SUPPORT) -->
+            <section id="view-profile" class="hidden space-y-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center">
+                    <div id="profile-img-container" class="w-20 h-20 mx-auto rounded-full bg-primary-100 text-primary-600 flex items-center justify-center text-3xl font-bold border-2 border-primary-500 mb-3 overflow-hidden shadow-md">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <h2 id="profile-name" class="text-lg font-bold text-slate-900">গেস্ট ইউজার</h2>
+                    <p id="profile-email" class="text-xs text-slate-500 mt-0.5">guest@bottola.app</p>
+                    
+                    <!-- Guest Login Form Panel -->
+                    <div id="guest-login-banner" class="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-left space-y-3">
+                        <p class="text-xs text-slate-600 text-center font-medium mb-1">পোস্ট করতে বা সেভ করে রাখতে লগইন করুন</p>
+                        
+                        <!-- Google Smart Auth -->
+                        <button id="btn-profile-google-login" class="w-full bg-slate-900 text-white text-xs font-bold py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center justify-center space-x-2 shadow-md">
+                            <i class="fa-brands fa-google text-red-500"></i>
+                            <span>Google দিয়ে এক-ক্লিকে সাইন ইন</span>
+                        </button>
+
+                        <div class="relative flex py-1 items-center">
+                            <div class="flex-grow border-t border-slate-200"></div>
+                            <span class="flex-shrink mx-2 text-[10px] text-slate-400 uppercase font-semibold">অথবা ইমেইল দিয়ে</span>
+                            <div class="flex-grow border-t border-slate-200"></div>
+                        </div>
+
+                        <!-- Email/Password Auth Toggle Form -->
+                        <div id="email-auth-box" class="space-y-2.5">
+                            <div id="auth-name-field" class="hidden">
+                                <label class="block text-[11px] font-bold text-slate-700 mb-0.5">আপনার নাম</label>
+                                <input type="text" id="user-name-input" placeholder="আপনার নাম লিখুন" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-0.5">ইমেইল</label>
+                                <input type="email" id="user-email-input" placeholder="example@mail.com" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-0.5">পাসওয়ার্ড</label>
+                                <input type="password" id="user-pass-input" placeholder="••••••••" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 outline-none">
+                            </div>
+                            <button id="btn-email-submit" class="w-full bg-primary-600 text-white font-bold text-xs py-2.5 rounded-xl hover:bg-primary-700 transition">
+                                লগইন করুন
+                            </button>
+                            <div class="text-center pt-1">
+                                <button id="btn-toggle-auth-mode" class="text-[11px] text-primary-600 font-semibold hover:underline">
+                                    নতুন একাউন্ট তৈরি করতে চান? রেজিস্টার করুন
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="user-actions-panel" class="hidden mt-6 space-y-2 text-left">
+                        <button data-nav="my-posts" class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-list-check text-primary-600"></i>
+                                <span class="text-sm font-semibold text-slate-700">আমার পোস্ট সমূহ</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+                        </button>
+                        <button id="btn-logout" class="w-full flex items-center justify-between p-3 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100 transition">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <span class="text-sm font-semibold">লগআউট করুন</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DEVELOPER INFO VIEW -->
+            <section id="view-developer" class="hidden space-y-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center">
+                    <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-tr from-teal-500 to-emerald-500 p-1 shadow-xl mb-4">
+                        <div class="w-full h-full bg-white rounded-full flex items-center justify-center text-teal-600 text-4xl">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-900">Developer SOJIB</h2>
+                    <p class="text-xs text-slate-500 mt-1">যে কোন ধরনের কাস্টম সফটওয়্যার বা ওয়েবসাইট বা অ্যাপ বানিয়ে নিয়ে এখনি যোগাগোগ করুন</p>
+                    
+                    <div class="my-6 border-t border-b border-slate-100 py-6 flex justify-center items-center space-x-6">
+                        <a href="https://wa.me/8801409084810" target="_blank" rel="noopener noreferrer" class="w-14 h-14 bg-emerald-500 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/30 hover:scale-105 transition transform active:scale-95" aria-label="WhatsApp Contact">
+                            <i class="fa-brands fa-whatsapp text-3xl"></i>
+                        </a>
+
+                        <a href="https://www.tiktok.com/@sojib_music" target="_blank" rel="noopener noreferrer" class="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-slate-900/30 hover:scale-105 transition transform active:scale-95" aria-label="TikTok Profile">
+                            <i class="fa-brands fa-tiktok text-3xl"></i>
+                        </a>
+                    </div>
+                    
+                    <p class="text-xs text-slate-400">যে কোনো সহায়তায় উপরের আইকনে ক্লিক করে সরাসরি যোগাযোগ করুন।</p>
+                </div>
+            </section>
+
+            <!-- ABOUT VIEW -->
+            <section id="view-about" class="hidden space-y-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+                    <h2 class="text-lg font-bold text-slate-900">আমাদের সম্পর্কে</h2>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        "বটতলা হেল্পলাইন" অ্যাপটি বটতলা এলাকার সকল সাধারণ নাগরিকের সুবিধার্থে নির্মিত একটি আধুনিক ডিজিটাল সেবা ডিরেক্টরি।
+                    </p>
+                </div>
+            </section>
+
+            <!-- PRIVACY POLICY VIEW -->
+            <section id="view-privacy" class="hidden space-y-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+                    <h2 class="text-lg font-bold text-slate-900">গোপনীয়তা নীতি</h2>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        আপনার তথ্যের নিরাপত্তা আমাদের কাছে অত্যন্ত গুরুত্বপূর্ণ।
+                    </p>
+                </div>
+            </section>
+
+            <!-- TERMS VIEW -->
+            <section id="view-terms" class="hidden space-y-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+                    <h2 class="text-lg font-bold text-slate-900">ব্যবহারের শর্তাবলী</h2>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        অ্যাপটিতে সঠিক তথ্য প্রদান করতে হবে।
+                    </p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex justify-around items-center z-30 shadow-lg">
+            <button data-target="view-home" class="nav-tab flex flex-col items-center p-1 text-slate-500 tab-active">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="text-[10px] mt-0.5 font-medium">হোম</span>
+            </button>
+            <button data-target="view-saved" class="nav-tab flex flex-col items-center p-1 text-slate-500">
+                <i class="fa-regular fa-bookmark text-lg"></i>
+                <span class="text-[10px] mt-0.5 font-medium">সংরক্ষিত</span>
+            </button>
+            <button id="btn-bottom-add-post" class="flex flex-col items-center justify-center -mt-6">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-primary-600 to-brand-600 text-white flex items-center justify-center shadow-lg shadow-teal-600/40 hover:scale-105 transition transform active:scale-95">
+                    <i class="fa-solid fa-plus text-xl"></i>
+                </div>
+                <span class="text-[10px] mt-0.5 font-medium text-slate-600">যোগ করুন</span>
+            </button>
+            <button data-target="view-my-posts" class="nav-tab flex flex-col items-center p-1 text-slate-500">
+                <i class="fa-solid fa-list-ul text-lg"></i>
+                <span class="text-[10px] mt-0.5 font-medium">মাই পোস্ট</span>
+            </button>
+            <button data-target="view-profile" class="nav-tab flex flex-col items-center p-1 text-slate-500">
+                <i class="fa-regular fa-user text-lg"></i>
+                <span class="text-[10px] mt-0.5 font-medium">প্রোফাইল</span>
+            </button>
+        </nav>
+
+        <!-- Toast Notification Container -->
+        <div id="toast-container" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 flex flex-col space-y-2 pointer-events-none w-11/12 max-w-sm"></div>
+
+    </div>
+
+    <!-- PWA Installation Script -->
+    <script>
+        const swCode = `
+            const CACHE_NAME = 'bottola-v1';
+            const ASSETS = ['/', 'https://cdn.tailwindcss.com', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'];
+            self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))); });
+            self.addEventListener('fetch', (e) => { e.respondWith(caches.match(e.request).then((res) => res || fetch(e.request))); });
+        `;
+        if ('serviceWorker' in navigator) {
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(console.error);
+        }
+    </script>
+
+    <!-- Firebase v10 Modular Logic with Smart Auth Fallbacks -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getAuth, 
+            GoogleAuthProvider, 
+            signInWithPopup, 
+            signInWithRedirect,
+            getRedirectResult,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            updateProfile,
+            signOut, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            doc, 
+            addDoc, 
+            updateDoc, 
+            deleteDoc, 
+            onSnapshot, 
+            serverTimestamp,
+            setDoc
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACldZd5zT9DST_VtH8wsmbgKCuxyvtnWM",
+            authDomain: "bottola-helpline.firebaseapp.com",
+            databaseURL: "https://bottola-helpline-default-rtdb.firebaseio.com",
+            projectId: "bottola-helpline",
+            storageBucket: "bottola-helpline.firebasestorage.app",
+            messagingSenderId: "272626965762",
+            appId: "1:272626965762:web:aec4c4712b7cf25308761b",
+            measurementId: "G-RSEDZYP7NM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        let currentUser = null;
+        let categoriesData = [];
+        let listingsData = [];
+        let savedItems = JSON.parse(localStorage.getItem('bottola_saved') || '[]');
+        let selectedCategory = null;
+        let isSignUpMode = false;
+
+        const DEFAULT_CATEGORIES = [
+            { id: 'hospital', name: 'Hospital', nameBn: 'হাসপাতাল', icon: 'fa-hospital' },
+            { id: 'doctor', name: 'Doctor', nameBn: 'ডাক্তার', icon: 'fa-user-doctor' },
+            { id: 'blood', name: 'Blood', nameBn: 'রক্ত সেবা', icon: 'fa-droplet' },
+            { id: 'police', name: 'Police', nameBn: 'পুলিশ', icon: 'fa-user-shield' },
+            { id: 'fire', name: 'Fire Service', nameBn: 'ফায়ার সার্ভিস', icon: 'fa-fire-extinguisher' },
+            { id: 'lawyer', name: 'Lawyer', nameBn: 'আইনজীবী', icon: 'fa-scale-balanced' },
+            { id: 'transport', name: 'Transport', nameBn: 'পরিবহন', icon: 'fa-bus' },
+            { id: 'car', name: 'Car Rent', nameBn: 'গাড়ি ভাড়া', icon: 'fa-car' },
+            { id: 'hotel', name: 'Hotel', nameBn: 'হোটেল', icon: 'fa-hotel' },
+            { id: 'restaurant', name: 'Restaurant', nameBn: 'রেস্টুরেন্ট', icon: 'fa-utensils' },
+            { id: 'shop', name: 'Shop', nameBn: 'দোকান ও বাজার', icon: 'fa-store' },
+            { id: 'school', name: 'School', nameBn: 'স্কুল', icon: 'fa-school' },
+            { id: 'college', name: 'College', nameBn: 'কলেজ', icon: 'fa-graduation-cap' },
+            { id: 'university', name: 'University', nameBn: 'বিশ্ববিদ্যালয়', icon: 'fa-building-columns' },
+            { id: 'mosque', name: 'Mosque', nameBn: 'মসজিদ', icon: 'fa-mosque' },
+            { id: 'temple', name: 'Temple', nameBn: 'মন্দির', icon: 'fa-gopuram' },
+            { id: 'church', name: 'Church', nameBn: 'গির্জা', icon: 'fa-church' },
+            { id: 'govt', name: 'Government Office', nameBn: 'সরকারি অফিস', icon: 'fa-landmark' },
+            { id: 'emergency', name: 'Emergency', nameBn: 'জরুরী সেবা', icon: 'fa-triangle-exclamation' },
+            { id: 'complaint', name: 'Complaint', nameBn: 'অভিযোগ', icon: 'fa-bullhorn' },
+            { id: 'volunteer', name: 'Volunteer', nameBn: 'স্বেচ্ছাসেবক', icon: 'fa-hands-holding-child' },
+            { id: 'news', name: 'News', nameBn: 'সংবাদ', icon: 'fa-newspaper' },
+            { id: 'jobs', name: 'Jobs', nameBn: 'চাকরি', icon: 'fa-briefcase' },
+            { id: 'directory', name: 'Local Directory', nameBn: 'লোকাল ডিরেক্টরি', icon: 'fa-address-book' }
+        ];
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            const bgClass = type === 'error' ? 'bg-rose-600' : type === 'success' ? 'bg-emerald-600' : 'bg-slate-800';
+            toast.className = `${bgClass} text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-xl transition-all duration-300 transform opacity-0 translate-y-2 pointer-events-auto flex items-center space-x-2`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i><span>${message}</span>`;
+            
+            const container = document.getElementById('toast-container');
+            container.appendChild(toast);
+
+            setTimeout(() => { toast.classList.remove('opacity-0', 'translate-y-2'); }, 50);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            if (splash) {
+                splash.classList.add('opacity-0');
+                setTimeout(() => splash.style.display = 'none', 500);
+            }
+        }, 1200);
+
+        function navigateToView(viewId) {
+            const views = document.querySelectorAll('main > section');
+            views.forEach(v => v.classList.add('hidden'));
+            const targetView = document.getElementById(viewId);
+            if (targetView) targetView.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                if (tab.getAttribute('data-target') === viewId) tab.classList.add('tab-active');
+                else tab.classList.remove('tab-active');
+            });
+            closeDrawer();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('[data-target]').forEach(btn => {
+            btn.addEventListener('click', () => navigateToView(btn.getAttribute('data-target')));
+        });
+
+        document.querySelectorAll('[data-nav]').forEach(btn => {
+            btn.addEventListener('click', () => navigateToView(`view-${btn.getAttribute('data-nav')}`));
+        });
+
+        const drawer = document.getElementById('drawer');
+        const drawerBackdrop = document.getElementById('drawer-backdrop');
+
+        function openDrawer() {
+            drawer.classList.remove('-translate-x-full');
+            drawerBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+        }
+        function closeDrawer() {
+            drawer.classList.add('-translate-x-full');
+            drawerBackdrop.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        document.getElementById('btn-open-drawer').addEventListener('click', openDrawer);
+        drawerBackdrop.addEventListener('click', closeDrawer);
+
+        const searchModal = document.getElementById('search-modal');
+        document.getElementById('btn-search-trigger').addEventListener('click', () => searchModal.classList.remove('hidden'));
+        document.getElementById('btn-close-search').addEventListener('click', () => searchModal.classList.add('hidden'));
+
+        function initCategoriesRealtime() {
+            onSnapshot(collection(db, "categories"), (snapshot) => {
+                if (snapshot.empty) {
+                    DEFAULT_CATEGORIES.forEach(cat => setDoc(doc(db, "categories", cat.id), cat));
+                    categoriesData = DEFAULT_CATEGORIES;
+                } else {
+                    categoriesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                }
+                renderCategories();
+                populatePostCategoryDropdown();
+            }, (error) => {
+                categoriesData = DEFAULT_CATEGORIES;
+                renderCategories();
+                populatePostCategoryDropdown();
+            });
+        }
+
+        function renderCategories() {
+            const grid = document.getElementById('category-grid');
+            const countLabel = document.getElementById('category-count');
+            grid.innerHTML = '';
+            if (countLabel) countLabel.innerText = `${categoriesData.length} টি ক্যাটাগরি`;
+
+            categoriesData.forEach(cat => {
+                const item = document.createElement('button');
+                item.className = 'flex flex-col items-center justify-center p-3 bg-white border border-slate-200/80 rounded-2xl shadow-sm hover:shadow-md hover:border-primary-500 transition group active:scale-95';
+                item.innerHTML = `
+                    <div class="w-10 h-10 rounded-xl bg-teal-50 text-primary-600 flex items-center justify-center text-lg mb-1.5 group-hover:bg-primary-600 group-hover:text-white transition">
+                        <i class="fa-solid ${cat.icon || 'fa-folder'}"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-700 text-center line-clamp-1">${cat.nameBn || cat.name}</span>
+                `;
+                item.onclick = () => openCategoryView(cat);
+                grid.appendChild(item);
+            });
+        }
+
+        function populatePostCategoryDropdown() {
+            const select = document.getElementById('post-category');
+            select.innerHTML = '<option value="">নির্বাচন করুন</option>';
+            categoriesData.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat.id;
+                opt.textContent = cat.nameBn || cat.name;
+                select.appendChild(opt);
+            });
+        }
+
+        function openCategoryView(category) {
+            selectedCategory = category;
+            document.getElementById('category-title').innerText = category.nameBn || category.name;
+            navigateToView('view-category-list');
+            renderCategoryItems();
+        }
+
+        document.getElementById('btn-back-category').addEventListener('click', () => navigateToView('view-home'));
+
+        function renderCategoryItems() {
+            const container = document.getElementById('category-items-container');
+            container.innerHTML = '';
+            if (!selectedCategory) return;
+            const items = listingsData.filter(item => item.categoryId === selectedCategory.id);
+            if (items.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-2"></i>
+                        <p class="text-sm font-semibold text-slate-600">কোনো তথ্য পাওয়া যায়নি</p>
+                    </div>`;
+                return;
+            }
+            items.forEach(item => container.appendChild(createListingCard(item)));
+        }
+
+        function createListingCard(item) {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3';
+            const isOwner = Boolean(currentUser && currentUser.uid && item.authorUid && (currentUser.uid === item.authorUid));
+
+            card.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-base">${item.title}</h4>
+                        <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-location-dot text-primary-600 mr-1"></i>${item.address}</p>
+                    </div>
+                    ${isOwner ? `
+                        <div class="flex space-x-1">
+                            <button class="btn-edit-item p-1.5 text-slate-400 hover:text-primary-600" title="সম্পাদনা"><i class="fa-solid fa-pen-to-square text-sm"></i></button>
+                            <button class="btn-delete-item p-1.5 text-slate-400 hover:text-rose-600" title="মুছে ফেলুন"><i class="fa-solid fa-trash text-sm"></i></button>
+                        </div>` : ''}
+                </div>
+                ${item.details ? `<p class="text-xs text-slate-600 line-clamp-2">${item.details}</p>` : ''}
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                    <a href="tel:${item.phone}" class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-teal-50 text-primary-700 font-bold text-xs hover:bg-primary-100 transition">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>${item.phone}</span>
+                    </a>
+                    <button class="btn-view-detail text-xs font-semibold text-primary-600 hover:underline">বিস্তারিত দেখুন</button>
+                </div>`;
+
+            const detailBtn = card.querySelector('.btn-view-detail');
+            if (detailBtn) detailBtn.onclick = () => openDetailView(item);
+
+            if (isOwner) {
+                const editBtn = card.querySelector('.btn-edit-item');
+                const deleteBtn = card.querySelector('.btn-delete-item');
+                if (editBtn) editBtn.onclick = () => openEditForm(item);
+                if (deleteBtn) deleteBtn.onclick = () => deleteListing(item);
+            }
+            return card;
+        }
+
+        function initListingsRealtime() {
+            onSnapshot(collection(db, "listings"), (snapshot) => {
+                listingsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderRecentListings();
+                if (!document.getElementById('view-category-list').classList.contains('hidden')) renderCategoryItems();
+                if (!document.getElementById('view-my-posts').classList.contains('hidden')) renderMyPosts();
+                renderSavedItems();
+            });
+        }
+
+        function renderRecentListings() {
+            const container = document.getElementById('recent-listings-list');
+            container.innerHTML = '';
+            if (listingsData.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">কোনো তথ্য যুক্ত করা হয়নি।</p>';
+                return;
+            }
+            [...listingsData].slice(0, 5).forEach(item => container.appendChild(createListingCard(item)));
+        }
+
+        function openDetailView(item) {
+            const cardContainer = document.getElementById('detail-card');
+            const bookmarkIcon = document.getElementById('bookmark-icon');
+            const isSaved = savedItems.includes(item.id);
+            bookmarkIcon.className = isSaved ? 'fa-solid fa-bookmark text-amber-500' : 'fa-regular fa-bookmark';
+
+            cardContainer.innerHTML = `
+                ${item.imageUrl ? `<img src="${item.imageUrl}" class="w-full h-48 object-cover">` : ''}
+                <div class="p-5 space-y-4">
+                    <div>
+                        <span class="text-[10px] font-bold px-2.5 py-1 bg-teal-50 text-primary-700 rounded-md">
+                            ${(categoriesData.find(c => c.id === item.categoryId) || {}).nameBn || 'ডিরেক্টরি'}
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-2">${item.title}</h2>
+                        <p class="text-xs text-slate-500 mt-1"><i class="fa-solid fa-location-dot text-primary-600 mr-1"></i>${item.address}</p>
+                    </div>
+                    ${item.details ? `<div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-700 leading-relaxed">${item.details}</div>` : ''}
+                    <div class="space-y-2 pt-2">
+                        <a href="tel:${item.phone}" class="w-full flex items-center justify-center space-x-2 py-3 rounded-xl bg-primary-600 text-white font-bold text-sm shadow-md hover:bg-primary-700 transition">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>সরাসরি কল করুন (${item.phone})</span>
+                        </a>
+                        <a href="https://wa.me/88${item.phone.replace(/[^0-9]/g, '')}" target="_blank" class="w-full flex items-center justify-center space-x-2 py-3 rounded-xl bg-emerald-500 text-white font-bold text-sm shadow-md hover:bg-emerald-600 transition">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>হোয়াটসঅ্যাপ মেসেজ</span>
+                        </a>
+                    </div>
+                </div>`;
+
+            document.getElementById('btn-bookmark-item').onclick = () => toggleBookmark(item.id);
+            navigateToView('view-detail');
+        }
+
+        document.getElementById('btn-back-detail').addEventListener('click', () => navigateToView('view-home'));
+
+        function toggleBookmark(id) {
+            if (savedItems.includes(id)) {
+                savedItems = savedItems.filter(itemId => itemId !== id);
+                showToast("বুকমার্ক থেকে সরানো হয়েছে");
+            } else {
+                savedItems.push(id);
+                showToast("সংরক্ষণ করা হয়েছে", "success");
+            }
+            localStorage.setItem('bottola_saved', JSON.stringify(savedItems));
+            renderSavedItems();
+        }
+
+        function renderSavedItems() {
+            const container = document.getElementById('saved-items-list');
+            if (!container) return;
+            container.innerHTML = '';
+            const items = listingsData.filter(item => savedItems.includes(item.id));
+            if (items.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-400 text-center py-6">কোনো বুকমার্ক করা তথ্য নেই।</p>';
+                return;
+            }
+            items.forEach(item => container.appendChild(createListingCard(item)));
+        }
+
+        document.getElementById('btn-bottom-add-post').addEventListener('click', () => {
+            if (!currentUser) {
+                showToast("পোস্ট করার জন্য প্রথমে লগইন করুন", "error");
+                navigateToView('view-profile');
+                return;
+            }
+            resetPostForm();
+            navigateToView('view-create-post');
+        });
+
+        function resetPostForm() {
+            document.getElementById('post-form').reset();
+            document.getElementById('post-id').value = '';
+            document.getElementById('form-title').innerText = 'নতুন তথ্য যোগ করুন';
+            document.getElementById('btn-submit-post').innerText = 'পাবলিশ করুন';
+        }
+
+        function openEditForm(item) {
+            if (!currentUser || !currentUser.uid || !item.authorUid || currentUser.uid !== item.authorUid) {
+                showToast("আপনি শুধুমাত্র আপনার নিজের পোস্ট এডিট করতে পারবেন!", "error");
+                return;
+            }
+            document.getElementById('post-id').value = item.id;
+            document.getElementById('post-category').value = item.categoryId;
+            document.getElementById('post-title').value = item.title;
+            document.getElementById('post-phone').value = item.phone;
+            document.getElementById('post-address').value = item.address;
+            document.getElementById('post-details').value = item.details || '';
+            document.getElementById('post-image').value = item.imageUrl || '';
+            document.getElementById('form-title').innerText = 'তথ্য পরিবর্তন করুন';
+            document.getElementById('btn-submit-post').innerText = 'আপডেট করুন';
+            navigateToView('view-create-post');
+        }
+
+        document.getElementById('post-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) { showToast("আপনার লগইন সেশন পাওয়া যায়নি", "error"); return; }
+
+            const id = document.getElementById('post-id').value;
+            const categoryId = document.getElementById('post-category').value;
+            const title = document.getElementById('post-title').value.trim();
+            const phone = document.getElementById('post-phone').value.trim();
+            const address = document.getElementById('post-address').value.trim();
+            const details = document.getElementById('post-details').value.trim();
+            const imageUrl = document.getElementById('post-image').value.trim();
+
+            if (id) {
+                const existingItem = listingsData.find(x => x.id === id);
+                if (!existingItem || existingItem.authorUid !== currentUser.uid) {
+                    showToast("অন্যজনের পোস্ট এডিট করার অনুমতি আপনার নেই!", "error");
+                    return;
+                }
+            }
+
+            const postData = {
+                categoryId, title, phone, address, details, imageUrl,
+                authorUid: currentUser.uid,
+                authorName: currentUser.displayName || 'ব্যবহারকারী',
+                authorEmail: currentUser.email || '',
+                updatedAt: serverTimestamp()
+            };
+
+            try {
+                if (id) {
+                    await updateDoc(doc(db, "listings", id), postData);
+                    showToast("তথ্য সফলভাবে আপডেট করা হয়েছে", "success");
+                } else {
+                    postData.createdAt = serverTimestamp();
+                    await addDoc(collection(db, "listings"), postData);
+                    showToast("নতুন তথ্য সফলভাবে যোগ করা হয়েছে", "success");
+                }
+                resetPostForm();
+                navigateToView('view-home');
+            } catch (err) {
+                showToast("সংরক্ষণ করতে সমস্যা হয়েছে: অনুমতি নেই", "error");
+            }
+        });
+
+        async function deleteListing(item) {
+            if (!currentUser || !currentUser.uid || !item || !item.authorUid || currentUser.uid !== item.authorUid) {
+                showToast("আপনি শুধুমাত্র আপনার নিজের পোস্ট মুছে ফেলতে পারবেন!", "error");
+                return;
+            }
+            if (confirm("আপনি কি নিশ্চিত যে এই তথ্যটি মুছে ফেলতে চান?")) {
+                try {
+                    await deleteDoc(doc(db, "listings", item.id));
+                    showToast("তথ্য মুছে ফেলা হয়েছে", "success");
+                } catch (err) {
+                    showToast("মুছে ফেলতে ব্যর্থ হয়েছে: অনুমতি নেই", "error");
+                }
+            }
+        }
+
+        function renderMyPosts() {
+            const container = document.getElementById('my-posts-list');
+            if (!container) return;
+            container.innerHTML = '';
+            if (!currentUser) {
+                container.innerHTML = '<p class="text-xs text-slate-400 text-center py-6">লগইন করুন আপনার পোস্ট দেখতে।</p>';
+                return;
+            }
+            const items = listingsData.filter(item => item.authorUid === currentUser.uid);
+            if (items.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-400 text-center py-6">আপনি এখনও কোনো পোস্ট করেননি।</p>';
+                return;
+            }
+            items.forEach(item => container.appendChild(createListingCard(item)));
+        }
+
+        document.getElementById('global-search-input').addEventListener('input', (e) => {
+            const queryVal = e.target.value.toLowerCase().trim();
+            const container = document.getElementById('search-results');
+            container.innerHTML = '';
+            if (!queryVal) {
+                container.innerHTML = '<p class="text-xs text-slate-400 text-center py-6">কিছু লিখে সার্চ করুন...</p>';
+                return;
+            }
+            const results = listingsData.filter(item => 
+                item.title.toLowerCase().includes(queryVal) || 
+                item.address.toLowerCase().includes(queryVal) ||
+                item.phone.includes(queryVal)
+            );
+            if (results.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-400 text-center py-6">কোনো মিল পাওয়া যায়নি</p>';
+                return;
+            }
+            results.forEach(item => container.appendChild(createListingCard(item)));
+        });
+
+        function initNoticesRealtime() {
+            onSnapshot(collection(db, "notices"), (snapshot) => {
+                if (!snapshot.empty) {
+                    const noticeData = snapshot.docs[0].data();
+                    if (noticeData && noticeData.active) {
+                        document.getElementById('notice-container').classList.remove('hidden');
+                        document.getElementById('notice-text').innerText = noticeData.content || '';
+                    } else {
+                        document.getElementById('notice-container').classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        function updateUIAuth(user) {
+            currentUser = user;
+            const headerStatus = document.getElementById('header-user-status');
+            const drawerAvatar = document.getElementById('drawer-user-avatar');
+            const drawerName = document.getElementById('drawer-user-name');
+            const drawerEmail = document.getElementById('drawer-user-email');
+            const drawerAuthBtnTxt = document.getElementById('txt-drawer-auth-btn');
+            
+            const profileImg = document.getElementById('profile-img-container');
+            const profileName = document.getElementById('profile-name');
+            const profileEmail = document.getElementById('profile-email');
+            const guestBanner = document.getElementById('guest-login-banner');
+            const userPanel = document.getElementById('user-actions-panel');
+
+            if (user) {
+                const name = user.displayName || user.email.split('@')[0];
+                if (headerStatus) headerStatus.innerText = name;
+                if (drawerName) drawerName.innerText = name;
+                if (drawerEmail) drawerEmail.innerText = user.email || '';
+                if (drawerAuthBtnTxt) drawerAuthBtnTxt.innerText = 'লগআউট করুন';
+                
+                if (user.photoURL) {
+                    drawerAvatar.innerHTML = `<img src="${user.photoURL}" class="w-full h-full object-cover rounded-full">`;
+                    profileImg.innerHTML = `<img src="${user.photoURL}" class="w-full h-full object-cover rounded-full">`;
+                } else {
+                    drawerAvatar.innerText = name[0].toUpperCase();
+                    profileImg.innerText = name[0].toUpperCase();
+                }
+
+                if (profileName) profileName.innerText = name;
+                if (profileEmail) profileEmail.innerText = user.email || '';
+                
+                if (guestBanner) guestBanner.classList.add('hidden');
+                if (userPanel) userPanel.classList.remove('hidden');
+
+            } else {
+                if (headerStatus) headerStatus.innerText = 'গেস্ট মোড';
+                if (drawerName) drawerName.innerText = 'অতিথি';
+                if (drawerEmail) drawerEmail.innerText = 'লগইন করা নেই';
+                if (drawerAuthBtnTxt) drawerAuthBtnTxt.innerText = 'লগইন করুন';
+                if (drawerAvatar) drawerAvatar.innerHTML = `<i class="fa-solid fa-user"></i>`;
+                if (profileImg) profileImg.innerHTML = `<i class="fa-solid fa-user"></i>`;
+                if (profileName) profileName.innerText = 'গেস্ট ইউজার';
+                if (profileEmail) profileEmail.innerText = 'guest@bottola.app';
+
+                if (guestBanner) guestBanner.classList.remove('hidden');
+                if (userPanel) userPanel.classList.add('hidden');
+            }
+
+            renderRecentListings();
+            renderMyPosts();
+            if (selectedCategory) renderCategoryItems();
+        }
+
+        // SMART GOOGLE AUTH (POPUP -> REDIRECT FALLBACK FOR WEBVIEWS)
+        async function handleGoogleLogin() {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                showToast(`স্বাগতম ${result.user.displayName}`, "success");
+            } catch (err) {
+                console.warn("Popup blocked or failed, trying redirect:", err);
+                try {
+                    await signInWithRedirect(auth, googleProvider);
+                } catch (redErr) {
+                    console.error("Auth error:", redErr);
+                    showToast("গুগল লগইন ব্রাউজারে সমর্থিত নয়। নিচের ইমেইল দিয়ে লগইন করুন।", "error");
+                }
+            }
+        }
+
+        // Handle Redirect Result after WebView Redirect
+        getRedirectResult(auth).then((result) => {
+            if (result && result.user) {
+                showToast(`স্বাগতম ${result.user.displayName}`, "success");
+            }
+        }).catch(err => console.error("Redirect Auth Error:", err));
+
+        // EMAIL / PASSWORD AUTH HANDLERS FOR WEBVIEWS
+        const btnToggleAuthMode = document.getElementById('btn-toggle-auth-mode');
+        const authNameField = document.getElementById('auth-name-field');
+        const btnEmailSubmit = document.getElementById('btn-email-submit');
+
+        btnToggleAuthMode.addEventListener('click', () => {
+            isSignUpMode = !isSignUpMode;
+            if (isSignUpMode) {
+                authNameField.classList.remove('hidden');
+                btnEmailSubmit.innerText = 'রেজিস্টার করুন';
+                btnToggleAuthMode.innerText = 'পূর্বে একাউন্ট আছে? লগইন করুন';
+            } else {
+                authNameField.classList.add('hidden');
+                btnEmailSubmit.innerText = 'লগইন করুন';
+                btnToggleAuthMode.innerText = 'নতুন একাউন্ট তৈরি করতে চান? রেজিস্টার করুন';
+            }
+        });
+
+        btnEmailSubmit.addEventListener('click', async () => {
+            const email = document.getElementById('user-email-input').value.trim();
+            const pass = document.getElementById('user-pass-input').value;
+            const name = document.getElementById('user-name-input').value.trim();
+
+            if (!email || !pass) {
+                showToast("ইমেইল ও পাসওয়ার্ড প্রদান করুন", "error");
+                return;
+            }
+
+            try {
+                if (isSignUpMode) {
+                    if (!name) {
+                        showToast("আপনার নাম লিখুন", "error");
+                        return;
+                    }
+                    const res = await createUserWithEmailAndPassword(auth, email, pass);
+                    await updateProfile(res.user, { displayName: name });
+                    
+                    // Create Firestore User Document
+                    await setDoc(doc(db, "users", res.user.uid), {
+                        uid: res.user.uid,
+                        displayName: name,
+                        email: email,
+                        role: 'user',
+                        createdAt: serverTimestamp()
+                    });
+
+                    showToast("একাউন্ট তৈরি সফল হয়েছে!", "success");
+                } else {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                    showToast("লগইন সফল হয়েছে!", "success");
+                }
+            } catch (err) {
+                console.error("Email Auth Error:", err);
+                if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+                    showToast("ভুল ইমেইল অথবা পাসওয়ার্ড দিয়েছেন!", "error");
+                } else if (err.code === 'auth/email-already-in-use') {
+                    showToast("এই ইমেইল দিয়ে ইতঃপূর্বে একাউন্ট তৈরি করা আছে!", "error");
+                } else if (err.code === 'auth/weak-password') {
+                    showToast("পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে", "error");
+                } else {
+                    showToast("লগইন ব্যর্থ হয়েছে: " + err.message, "error");
+                }
+            }
+        });
+
+        async function handleLogout() {
+            try {
+                await signOut(auth);
+                showToast("লগআউট করা হয়েছে");
+            } catch (err) {
+                console.error("Signout error:", err);
+            }
+        }
+
+        document.getElementById('btn-header-auth').addEventListener('click', () => navigateToView('view-profile'));
+        document.getElementById('btn-profile-google-login').addEventListener('click', handleGoogleLogin);
+        document.getElementById('btn-logout').addEventListener('click', handleLogout);
+        document.getElementById('btn-drawer-logout').addEventListener('click', () => {
+            if (currentUser) handleLogout();
+            else handleGoogleLogin();
+            closeDrawer();
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            updateUIAuth(user);
+        });
+
+        initCategoriesRealtime();
+        initListingsRealtime();
+        initNoticesRealtime();
+
+    </script>
+</body>
+</html>
